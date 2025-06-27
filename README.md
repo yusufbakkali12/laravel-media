@@ -10,6 +10,6 @@ Simple polymorphic media library for Laravel.
 "repositories": [
     {
         "type": "path",
-        "url": "../laravel-media"
+        "url": "https://github.com/yusufbakkali12/laravel-media"
     }
 ]
