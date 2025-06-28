@@ -22,7 +22,7 @@ Attach, retrieve, and manage media files (images, documents, etc.) on any Eloque
 ## ⚡ Installation
 
 
-###  1️⃣ Require the package
+### 1️⃣ Require the package
 
 ```php
  composer require bakkali/laravel-media:dev-main
@@ -31,13 +31,11 @@ Attach, retrieve, and manage media files (images, documents, etc.) on any Eloque
 ### 2️⃣ Publish migration & migrate
 
 ```php
-- php artisan vendor:publish --tag=media-migrations
-- php artisan migrate
+
+ php artisan vendor:publish --tag=media-migrations
+ php artisan migrate
+
 ```
-
-### 3️⃣ Keep your package updated
-
-- composer update bakkali/laravel-media
 
 
 # 🧩 Usage
@@ -56,6 +54,7 @@ class Post extends Model
 ## 📥 Add media to a model
 
 ```php
+
 $post = Post::find(1);
 
 // Add a media file to 'images' collection
@@ -66,20 +65,24 @@ $post->addMedia('/path/to/file.jpg', 'images');
 ## 📂 Get media by collection
 
 ```php
+
 $images = $post->getMedia('images');
 
 foreach ($images as $media) {
     echo $media->file_name;
     echo $media->disk;
 }
+
 ```
 
 ## ✏ Update media attributes
 
 ```php
+
 $post->updateMedia($mediaId, [
     'name' => 'New name'
 ]);
+
 ```
 
 ## 🧹 Soft delete media (alias)
@@ -98,7 +101,10 @@ $post->forceDeleteMedia($mediaId);
 
 ```
 
-
 # 🛠 Development & Updates
 
-- composer update bakkali/laravel-media
+```php
+
+- composer update bakkali/laravel-media:dev-main
+
+```
