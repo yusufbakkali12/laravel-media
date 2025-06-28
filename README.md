@@ -1,11 +1,13 @@
 # 📦 Laravel Media
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/bakkali/laravel-media.svg?style=flat-square)](https://packagist.org/packages/bakkali/laravel-media)
+[![Total Downloads](https://img.shields.io/packagist/dt/bakkali/laravel-media.svg?style=flat-square)](https://packagist.org/packages/bakkali/laravel-media)
+[![License](https://img.shields.io/packagist/l/bakkali/laravel-media.svg?style=flat-square)](https://packagist.org/packages/bakkali/laravel-media)
+
 Simple, lightweight **polymorphic media library** for Laravel.  
-Attach, retrieve and manage media files (images, documents, etc.) on any model.
+Attach, retrieve, and manage media files (images, documents, etc.) on any Eloquent model.
 
 > 🛠 Created by [Yusuf Bakkali](https://github.com/yusufbakkali12)
-
----
 
 ## ✨ Features
 
