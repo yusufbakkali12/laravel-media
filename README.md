@@ -24,12 +24,16 @@ Attach, retrieve, and manage media files (images, documents, etc.) on any Eloque
 
 ###  1️⃣ Require the package
 
-- composer require bakkali/laravel-media
+```php
+ composer require bakkali/laravel-media:dev-main
+```
 
 ### 2️⃣ Publish migration & migrate
 
+```php
 - php artisan vendor:publish --tag=media-migrations
 - php artisan migrate
+```
 
 ### 3️⃣ Keep your package updated
 
