@@ -76,13 +76,30 @@ foreach ($images as $media) {
 }
 ```
 
-## 🗑 Remove media by ID
+## ✏ Update media attributes
+
+```php
+$post->updateMedia($mediaId, [
+    'name' => 'New name'
+]);
+```
+
+## 🧹 Soft delete media (alias)
 
 ```php
 
-$post->removeMedia($mediaId);
+$post->destroyMedia($mediaId);
 
 ```
+
+## ❌ Permanently delete media
+
+```php
+
+$post->forceDeleteMedia($mediaId);
+
+```
+
 
 # 🛠 Development & Updates
 
