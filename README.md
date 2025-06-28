@@ -21,28 +21,20 @@ Attach, retrieve, and manage media files (images, documents, etc.) on any Eloque
 
 ## ⚡ Installation
 
-### 1️⃣ Add repository to your Laravel project
 
-In your Laravel project's `composer.json`:
+###  1️⃣ Require the package
 
-```json
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/yusufbakkali12/laravel-media"
-    }
-]
-```
+- composer require bakkali/laravel-media
 
-### 2️⃣ Require the package
-
-- composer require bakkali/laravel-media:dev-main
-
-
-### 3️⃣ Publish migration & migrate
+### 2️⃣ Publish migration & migrate
 
 - php artisan vendor:publish --tag=media-migrations
 - php artisan migrate
+
+### 3️⃣ Keep your package updated
+
+- composer update bakkali/laravel-media
+
 
 # 🧩 Usage
 
