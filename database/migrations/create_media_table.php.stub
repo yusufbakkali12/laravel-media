@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('disk');
             $table->string('conversions_disk')->nullable();
             $table->unsignedBigInteger('size');
-            $table->json('manipulations')->default(json_encode([]));
-            $table->json('custom_properties')->default(json_encode([]));
-            $table->json('generated_conversions')->default(json_encode([]));
-            $table->json('responsive_images')->default(json_encode([]));
+            $table->json('manipulations')->default(null);
+            $table->json('custom_properties')->default(null);
+            $table->json('generated_conversions')->default(null);
+            $table->json('responsive_images')->default(null);
             $table->unsignedInteger('order_column')->nullable()->index();
             $table->nullableTimestamps();
             $table->softDeletes();
