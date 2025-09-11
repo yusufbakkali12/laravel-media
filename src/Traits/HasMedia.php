@@ -3,6 +3,7 @@
 namespace Bakkali\Media\Traits;
 
 use Bakkali\Media\Models\Media;
+use Illuminate\Http\UploadedFile;
 
 trait HasMedia
 {
@@ -16,16 +17,17 @@ trait HasMedia
         return $this->media()->where('collection_name', $collection)->get();
     }
 
-    public function addMedia(string $filePath, string $collection = 'default', string $disk = 'public')
+    public function addMedia( UploadedFile $file , string $filePath, string $collection = 'default', string $disk = 'public')
     {
-        $fileName = basename($filePath);
-        $mimeType = mime_content_type($filePath);
-        $size = filesize($filePath);
+        $fileName = basename($file);
+        $mimeType = mime_content_type($file);
+        $size = filesize($file);
 
         return $this->media()->create([
             'collection_name'     => $collection,
             'name'                => pathinfo($fileName, PATHINFO_FILENAME),
             'file_name'           => $fileName,
+            'file_path'           => $filePath,
             'mime_type'           => $mimeType,
             'disk'                => $disk,
             'size'                => $size,
