@@ -18,6 +18,7 @@ class Media extends Model
         'collection_name',
         'name',
         'file_name',
+        'file_path',
         'mime_type',
         'disk',
         'conversions_disk',
