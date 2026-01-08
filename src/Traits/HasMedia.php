@@ -2,9 +2,11 @@
 
 namespace Bakkali\Media\Traits;
 
+
 use Bakkali\Media\Models\Media;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 trait HasMedia
 {
@@ -19,41 +21,55 @@ trait HasMedia
     /**
      * Get all media from a given collection.
      */
-    public function getMedia(string $collection = 'default')
+    public function getMedia(?string $collection = null, bool $latest = false)
     {
-        return $this->media()->where('collection_name', $collection)->get();
+        $query = $this->media();
+        if ($collection) {
+            $query->where('collection_name', $collection);
+        }
+
+        $query->with('tags');
+        $query->orderBy('id');
+        return $latest ? $query->latest()->first() : $query->get();
     }
+
 
     /**
      * Add a file record to media collection.
      *
-     * @param  UploadedFile $file
+     * @param UploadedFile  $file
      * @param  string       $filePath  Relative path (without disk logic)
      * @param  string       $collection
      * @param  string       $disk
      */
-    public function addMedia(
-        UploadedFile $file,
-        string $filePath,
-        string $collection = 'default',
-        string $disk = 'public'
-    ) {
-        // Generate unique file name (uuid + extension)
-        $fileName = Str::uuid() . '.' . $file->getClientOriginalExtension();
+    public function addMedia( UploadedFile $file, string $directory, string $collection = 'default', string $disk = 'minio' ): Media|null {
 
-        return $this->media()->create([
+        $uuid = Str::uuid();
+        // Generate unique file name
+        $fileName = $uuid . '.' . $file->getClientOriginalExtension();
+        $filePath = trim($directory, '/') . '/' . $fileName;
+
+        $save = Storage::disk($disk)->put($filePath, file_get_contents($file));
+        if (!$save) return null;
+
+        $media = $this->media()->create([
+            'uuid'                  => $uuid,
             'collection_name'       => $collection,
             'name'                  => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
             'file_name'             => $fileName,
-            'file_path'             => trim($filePath, '/') . '/' . $fileName,
+            'file_path'             => $filePath,
             'mime_type'             => $file->getMimeType(),
             'disk'                  => $disk,
+            'conversions_disk'      => $disk,
             'size'                  => $file->getSize(),
-            'custom_properties'     => [],
+            'order_column'          => $this->media()->max('order_column') + 1 ?? 1,
             'manipulations'         => [],
+            'custom_properties'     => [],
             'generated_conversions' => [],
             'responsive_images'     => [],
         ]);
+
+        return $media;
     }
 
     /**
@@ -72,7 +88,6 @@ trait HasMedia
     {
         $media = $this->media()->findOrFail($mediaId);
         $media->update($attributes);
-
         return $media;
     }
 

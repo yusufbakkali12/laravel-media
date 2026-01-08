@@ -2,6 +2,7 @@
 
 namespace Bakkali\Media\Models;
 
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -30,12 +31,44 @@ class Media extends Model
         'order_column',
     ];
 
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'media_tag');
+    }
+
     protected $casts = [
         'manipulations' => 'array',
         'custom_properties' => 'array',
         'generated_conversions' => 'array',
         'responsive_images' => 'array',
     ];
+
+
+    // helper to get tag names
+    public function getTagListAttribute()
+    {
+        return $this->tags()->pluck('name')->toArray();
+    }
+
+
+    public function getSizeAttribute($value): string
+    {
+        if (!$value) {
+            return '';
+        }
+
+        if ($value < 1024) {
+            return $value . ' B';
+        }
+
+        if ($value < 1024 * 1024) {
+            return round($value / 1024, 2) . ' KB';
+        }
+
+        return round($value / (1024 * 1024), 2) . ' MB';
+    }
+
 
     public function model()
     {
